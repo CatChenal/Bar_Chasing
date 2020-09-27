@@ -1,6 +1,6 @@
 # coding: utf-8
 # plotting.py
-#__last_updated__='2020_09_23'
+#__last_updated__='2020_09_26'
 
 """
 Module: covid19
@@ -25,10 +25,13 @@ from matplotlib.animation import FuncAnimation, PillowWriter
 from barchase import utils
 from barchase import dataset
 # .................................................................
-
 round3 = utils.round3
 DIR_IMG = utils.get_project_dirs()
 
+TXT = 'text'
+if mpl.__version__ == '3.1.1':
+    TXT = 's'
+    
 mystyle = {'axes.titlesize': 20,
            'axes.labelsize': 16,
            #'axes.labelweight': 'bold',
@@ -266,12 +269,13 @@ def barh_topN(day, df=None,
     anno_kwargs = dict(xy=(0.7, 0.3),
                        xycoords='figure fraction',
                        fontsize=20)
-    anno_kwargs['text'] = day.strftime('%b %d %Y')
+    
+    anno_kwargs[TXT] = day.strftime('%b %d %Y')
     ax.annotate(**anno_kwargs, fontweight=600)
         
     if data_source:
         # update before reuse:
-        anno_kwargs['text'] = F'{data_source}'
+        anno_kwargs[TXT] = F'{data_source}'
         anno_kwargs['xy'] = (0.7, 0.2)
         anno_kwargs['fontsize'] = 12
         ax.annotate(**anno_kwargs,
